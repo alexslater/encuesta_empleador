@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title or "Tredu Pilot" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">Tredu · Pilot</div>
+      <nav class="nav">
+        <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+      </nav>
+    </header>
+    <main class="card">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="foot">MVP · Flask</footer>
+  </div>
+</body>
+</html>

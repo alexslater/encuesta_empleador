@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Sesión #{{ session.id }}</h1>
+<p class="muted">
+  {{ session.display_name or "anónimo" }} · {{ session.org or "-" }} · {{ session.status }}
+</p>
+
+<p>
+  Link participante: <code>/s/{{ session.token }}</code>
+</p>
+
+<a class="btn" href="{{ url_for('admin.session_export', session_id=session.id) }}">Export CSV</a>
+
+<hr>
+
+{% for a in answers %}
+  <div class="box">
+    <h3>Pregunta {{ a.question.order }}</h3>
+    <p>{{ a.question.prompt }}</p>
+
+    {% if a.audio_filename %}
+      <audio controls src="{{ url_for('admin.serve_upload', filename=a.audio_filename) }}"></audio>
+      <p class="muted">{{ a.audio_filename }}</p>
+    {% else %}
+      <p class="muted">Sin audio</p>
+    {% endif %}
+
+    {% if a.text_answer %}
+      <p><b>Texto:</b> {{ a.text_answer }}</p>
+    {% endif %}
+  </div>
+{% else %}
+  <p class="muted">Sin respuestas aún.</p>
+{% endfor %}
+{% endblock %}

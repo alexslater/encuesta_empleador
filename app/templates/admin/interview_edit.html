@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ interview.title }}</h1>
+<p class="muted">{{ interview.description or "" }}</p>
+
+<section class="box">
+  <h2>Agregar pregunta</h2>
+  <form method="post" action="{{ url_for('admin.interview_add_question', interview_id=interview.id) }}">
+    <textarea name="prompt" rows="3" placeholder="Escribe la pregunta..."></textarea>
+    <button type="submit">Agregar</button>
+  </form>
+</section>
+
+<section class="box">
+  <h2>Preguntas</h2>
+  <ol>
+    {% for q in questions %}
+      <li>{{ q.prompt }}</li>
+    {% else %}
+      <li class="muted">Aún no hay preguntas.</li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="box">
+  <h2>Invitaciones</h2>
+  <form method="post" action="{{ url_for('admin.interview_invite', interview_id=interview.id) }}">
+    <label>Cantidad</label>
+    <input name="n" value="5">
+    <button type="submit">Generar tokens</button>
+  </form>
+
+  <h3>Sesiones</h3>
+  <ul>
+    {% for s in interview.sessions %}
+      <li>
+        <a href="{{ url_for('admin.session_view', session_id=s.id) }}">Sesión #{{ s.id }}</a>
+        <span class="muted">{{ s.status }}</span><br>
+        <code>/s/{{ s.token }}</code>
+      </li>
+    {% else %}
+      <li class="muted">Sin sesiones todavía.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

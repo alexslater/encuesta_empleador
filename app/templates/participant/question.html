@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Pregunta {{ question.order }}</h1>
+<p>{{ question.prompt }}</p>
+
+<div class="rec">
+  <div class="row">
+    <button type="button" onclick="startRecording()">Grabar</button>
+    <button type="button" onclick="stopRecording()">Detener</button>
+    <button type="button" onclick="uploadRecording('{{ url_for('participant.upload_audio', token=session.token, order=question.order) }}')">Subir audio</button>
+  </div>
+  <div id="recStatus" class="muted"></div>
+</div>
+
+<form method="post" action="{{ url_for('participant.save_text', token=session.token, order=question.order) }}">
+  <label>Resumen escrito (opcional)</label>
+  <textarea name="text_answer" rows="4" placeholder="1–2 líneas">{{ answer.text_answer if answer else "" }}</textarea>
+  <button type="submit">Siguiente</button>
+</form>
+
+<script src="{{ url_for('static', filename='participant.js') }}"></script>
+{% endblock %}

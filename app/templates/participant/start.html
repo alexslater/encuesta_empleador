@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ session.interview.title }}</h1>
+<p class="muted">{{ session.interview.description or "" }}</p>
+
+<form method="post">
+  <label>Nombre (opcional)</label>
+  <input name="display_name" placeholder="Tu nombre">
+
+  <label>Organización (opcional)</label>
+  <input name="org" placeholder="Empresa / institución">
+
+  <button type="submit">Comenzar</button>
+</form>
+{% endblock %}

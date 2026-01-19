@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin</h1>
+
+<div class="grid2">
+  <section>
+    <h2>Entrevistas</h2>
+    <div class="row">
+      <a class="btn" href="{{ url_for('admin.interview_new') }}">+ Nueva entrevista</a>
+      <form method="post" action="{{ url_for('admin.seed_demo') }}" style="display:inline;">
+        <button type="submit">Seed demo</button>
+      </form>
+    </div>
+    <ul>
+      {% for i in interviews %}
+        <li>
+          <a href="{{ url_for('admin.interview_edit', interview_id=i.id) }}">{{ i.title }}</a>
+          <span class="muted">(#{{ i.id }})</span>
+        </li>
+      {% else %}
+        <li class="muted">No hay entrevistas aún.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Sesiones recientes</h2>
+    <ul>
+      {% for s in sessions %}
+        <li>
+          <a href="{{ url_for('admin.session_view', session_id=s.id) }}">Sesión #{{ s.id }}</a>
+          <span class="muted">{{ s.status }} · {{ s.display_name or "anónimo" }}</span>
+        </li>
+      {% else %}
+        <li class="muted">Sin sesiones.</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+{% endblock %}
